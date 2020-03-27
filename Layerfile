@@ -17,7 +17,6 @@ RUN docker pull postgres:11.4-alpine && \
 
 COPY . .
 RUN /usr/local/go/bin/go mod download
-RUN /usr/local/go/bin/go build -o /bin/gogs -v
-WORKDIR /www
-RUN gogs web&
+RUN /usr/local/go/bin/go build -o gogs -v
+RUN ./gogs web&
 EXPOSE WEBSITE http://localhost:3000
