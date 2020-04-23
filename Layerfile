@@ -21,6 +21,6 @@ RUN /usr/local/go/bin/go build -o /bin/gogs -v
 WORKDIR /www
 RUN gogs web&
 
-RUN echo hello
+RUN echo hello2
 
 EXPOSE WEBSITE http://localhost:3000
