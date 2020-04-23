@@ -1,0 +1,24 @@
+FROM vm/ubuntu:18.04
+
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+        docker.io ca-certificates curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN curl -L "https://golang.org/dl/go1.14.linux-amd64.tar.gz" | tar -C /usr/local -xzf /dev/stdin
+
+RUN docker pull postgres:11.4-alpine && \
+    docker run -d \
+        -e POSTGRES_USER=postgres \
+        -e POSTGRES_PASSWORD=postgres \
+        -e POSTGRES_DB=gogs \
+        -p 5432:5432\
+        postgres:11.4-alpine
+
+RUN echo 'hello!'
+COPY . .
+RUN /usr/local/go/bin/go mod download
+RUN /usr/local/go/bin/go build -o /bin/gogs -v
+WORKDIR /www
+RUN gogs web&
+EXPOSE WEBSITE http://localhost:3000
