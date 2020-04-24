@@ -15,7 +15,7 @@ RUN docker pull postgres:11.4-alpine && \
         -p 5432:5432\
         postgres:11.4-alpine
 
-RUN echo 'hello!'
+RUN echo 'hello!!!'
 COPY . .
 RUN /usr/local/go/bin/go mod download
 RUN /usr/local/go/bin/go build -o /bin/gogs -v
